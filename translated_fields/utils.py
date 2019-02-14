@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.utils.text import capfirst
 
 from .fields import TranslatedField, to_attribute
@@ -7,10 +6,10 @@ from .fields import TranslatedField, to_attribute
 __all__ = ["TranslatedFieldWithFallback", "fallback_to_default"]
 
 
-def fallback_to_default(name):
+def fallback_to_default(name, field):
     def getter(self):
         return getattr(self, to_attribute(name)) or getattr(
-            self, to_attribute(name, settings.LANGUAGES[0][0])
+            self, to_attribute(name, field.languages[0])
         )
 
     return getter
